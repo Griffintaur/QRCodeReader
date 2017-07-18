@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jul 17 21:56:30 2017
+Created on  Jul 16 21:56:30 2017
 
-@author: 310247467
+@author: Ankit Singh
 """
-
+import cv2 as cv
 class PatternFinding(object):
     
     def __init__(self,contours_group,image):
-        self.image2=image
-        if contours is None:
+        self.image=image
+        if contours_group is None:
             print "Please provide contours"
         else:
             thresholdImage, contours, hierarchy=contours_group
@@ -19,13 +19,16 @@ class PatternFinding(object):
             
     def CheckContourWithinContourHavingLevel(self,nooflevels):
         """This function checks whether there is contour inside another contour till level as mentioned in the nooflevels"""
-        for contour,index in enumerate(self.Contours):
+        patterns=[]
+        for index in xrange(len(self.Contours)):
             IsPattern=self.IsPossibleQRContour(index)
             if IsPattern is True:
+                patterns.append(self.Contours[index])
                 x,y,w,h=cv.boundingRect(self.Contours[index])
-                cv.rectangle(self.image2,(x,y),(x+w,y+h),(0,255,0),2)
-                cv.imshow("hello",self.image2)
-            cv.waitKey(0)
+                cv.rectangle(self.image,(x,y),(x+w,y+h),(0,255,0),2)
+                cv.imshow("hello",self.image)    
+        cv.waitKey(0)
+        return patterns
             
         
     def CheckingRatioOfContours(self,index):
@@ -37,7 +40,8 @@ class PatternFinding(object):
         
         print areaoffirst
         print areaofsecondchild
-        if areaofsecondchild >0.8 and areaofsecondchild< 1:
+        print (areaoffirst/areaofsecondchild)
+        if (areaoffirst/areaofsecondchild)> 1 and (areaoffirst/areaofsecondchild)< 10:
             return True
         else:
             return False    
@@ -56,11 +60,18 @@ class PatternFinding(object):
     def IsPossibleQRContour(self,contourindex):
         """since contours belonging to QR have 6 other contours inside it.It is because every border is counted as contour in the Opencv"""
         tempContourChild=self.Hierarchy[0,contourindex,3]
+        #print tempContourChild
         level=0
         while tempContourChild !=-1:
             level=level+1
             tempContourChild=self.Hierarchy[0,tempContourChild,3]
-        if(level>=6):
+        if(level==3):
+            print level
+            IsAreaSame=self.CheckingRatioOfContours(contourindex)
+            if IsAreaSame is True:
+                return True
+            else:
+                return False
             return True
         else:
             return False
