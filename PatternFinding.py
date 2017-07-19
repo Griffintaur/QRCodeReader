@@ -47,36 +47,50 @@ class PatternFinding(object):
            area_patterns=np.array([cv.contourArea(pattern) for pattern in patterns])
            arg_areapatterns=np.argsort(area_patterns)
            passage_dictinary={}
-#           for i in xrange(len(patterns)):
-#               index=patterns_dictionary[arg_areapatterns[len(arg_areapatterns)-i-1]]
-#               if index is None:
-#                   print 'contour not found in the dictionary'
-#               else:
-#                   print self.Hierarchy[0][index][3]
-#                   if self.Hierarchy[0][index][3]==-1:
-#                       passage_dictinary[index]=-1
-#                   else:
-#                       if self.Hierarchy[0][index][3] in passage_dictinary.keys():
-#                           passage_dictinary[index]=1
-#                       else:
-#                           passage_dictinary[index]=-1
-#                                        
-#           for ind in xrange(len(patterns)):
-#                mapping=patterns_dictionary[ind]
-#                if passage_dictinary[mapping]==-1 and len(QRPatterns)<3:
-#                    x,y,w,h=cv.boundingRect(self.Contours[mapping])
-#                    cv.rectangle(self.image,(x,y),(x+w,y+h),(0,255,0),2)
-#                    cv.imshow("hello",self.image) 
-#                    QRPatterns.append(patterns[ind]
+           for i in xrange(len(patterns)):
+               index=patterns_dictionary[arg_areapatterns[len(arg_areapatterns)-i-1]]
+               if index is None:
+                   print 'contour not found in the dictionary'
+               else:
+                   #print'papa is', self.Hierarchy[0][index][3]
+                   if self.Hierarchy[0][index][3]==-1:
+                       passage_dictinary[index]=-1
+                   else:
+                       if self.IsparentAlreadyThere(passage_dictinary,index):
+                           passage_dictinary[index]=1
+                           #print 'got one',self.Hierarchy[0][index][3]
+                       else:
+                           passage_dictinary[index]=-1
+                                        
+        for ind in xrange(len(patterns)):
+                mapping=patterns_dictionary[ind]
+                if passage_dictinary[mapping]==-1:
+                    x,y,w,h=cv.boundingRect(self.Contours[mapping])
+                    cv.rectangle(self.image,(x,y),(x+w,y+h),(0,255,0),2)
+                    cv.imshow("hello",self.image) 
+                    QRPatterns.append(patterns[ind])
+        if len(QRPatterns)>3:
+           QRPatterns_new=[]
+           area_patterns=np.array([cv.contourArea(QRpattern) for QRpattern in QRPatterns])
+           arg_areapatterns=np.argsort(area_patterns)
            for i in xrange(3):
-               QRPatterns.append(patterns[arg_areapatterns[len(arg_areapatterns)-i-1]])
-               x,y,w,h=cv.boundingRect(QRPatterns[i])
+               QRPatterns_new.append(QRPatterns[arg_areapatterns[len(arg_areapatterns)-i-1]])
+               x,y,w,h=cv.boundingRect(QRPatterns_new[i])
                cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
                cv.imshow("hello",self.image) 
-           print 'length of QR',len(QRPatterns)
-           return QRPatterns
+           QRPatterns=QRPatterns_new
+        return QRPatterns
                
-        
+    
+    def IsparentAlreadyThere(self,passage_dictinary,index):
+        parent=self.Hierarchy[0][index][3]
+        while parent!=-1 and parent not in passage_dictinary.keys():
+            parent=self.Hierarchy[0][parent][3]
+        if parent==-1:
+            return False
+        else:
+            return True
+            
     def CheckingRatioOfContours(self,index):
         """This Functions checks whether contours are in the certain ratio or not.This is required for qr as the qr has the contours in the specific ratio"""
         firstchildindex=self.Hierarchy[0][index][2]
