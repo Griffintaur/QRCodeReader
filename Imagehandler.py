@@ -35,8 +35,8 @@ class Imagehandler(object):
             print"Image is not valid.Please select some other image"
         else:
             nameAppended=self.ImagePath.split("/")
-            image=cv.cvtColor(self.Image,cv.COLOR_BGR2GRAY)
-            cv.imwrite('qrcode'+nameAppended[len(nameAppended)-1],image)
+            image=cv.cvtColor(image,cv.COLOR_BGR2RGB)
+            cv.imwrite(os.path.join(os.getcwd(),'Results')+'qrcode'+nameAppended[len(nameAppended)-1]+'.png',image)
             cv.imshow('qrcode'+nameAppended[len(nameAppended)-1],image)
             cv.waitKey(0);
         
@@ -65,7 +65,7 @@ class Imagehandler(object):
     
     def QRCodeInImage(self):
         patternFindingObj=PatternFinding(self.GetImageContour(),self.imageOriginal)
-        patterns=patternFindingObj.CheckContourWithinContourHavingLevel(3)
+        patterns=patternFindingObj.FindingQRPatterns(3)
         contourA=patterns[0]
         contourB=patterns[1]
         contourC=patterns[2]

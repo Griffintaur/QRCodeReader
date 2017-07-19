@@ -18,9 +18,6 @@ class AffineTransformation(object):
     
     def Transform(self,PointTop,PointRight,PointBottom):
         Point1=[PointTop[0],PointTop[1]]
-        print Point1
-        print Point2
-        print Point3
         Point2=[PointRight[0],PointRight[1]]
         Point3=[PointBottom[0],PointBottom[1]]
         src=np.float32([Point1,Point2,Point3])

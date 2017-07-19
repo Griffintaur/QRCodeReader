@@ -58,7 +58,8 @@ class FindingOrientationOfContours(object):
         Right=None
         Bottom=None
         Top=None
-        if slope>0 and distance>0:
+        print slope,distance
+        if slope>=0 and distance>=0:
             #if slope and distance are positive A is bottom while B is right
             Right=SlopePointB
             Bottom=SlopePointA
@@ -98,5 +99,5 @@ class FindingOrientationOfContours(object):
         
     
      def __findSlope(self,pointA,pointB):
-        return (pointB[1]-pointA[1])/(pointB[0]-pointA[0])
+        return (pointB[1]-pointA[1])/(pointB[0]-pointA[0]+1e-5)
     
