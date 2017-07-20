@@ -6,13 +6,31 @@ Created on  Jun 16 22:39:34 2016
 """
 
 from Imagehandler import Imagehandler
+import yaml
+import glob
+import os
 
-if __name__ == "__main__":
-    directorypath="C:\Users\\310247467\Desktop\learn\qr\\"
-    images=['qr1.png', 'qr2.png', 'qr3.jpg', 'qr4.jpg']
-    paths=[directorypath+ image for image in images]
+def App():
+    with open("config.yml", 'r') as ymlfile:
+        cfg = yaml.load(ymlfile)
+    IOPlaces=cfg['Main']
+    input=IOPlaces['Input']
+    output=IOPlaces['Output']
+    directorypath=input
+    os.chdir(input)
+    filesTypes=cfg['FileType']
+    images=[]
+    for filetype in filesTypes:
+        images.extend(glob.glob("*."+filetype))
+    paths=[directorypath+image for image in images]
     for i in xrange(len(paths)):
         obj=Imagehandler(paths[i])
-        obj.QRCodeInImage()
-#    obj=Imagehandler(paths[0])
-#    obj.QRCodeInImage()
+        TransformImage=obj.QRCodeInImage()
+        if TransformImage is  None:
+            print "Image is not generated"
+        obj.WritingImage(TransformImage,str(output),'output'+str(i)+'.jpg')
+    
+
+
+if __name__ == "__main__":
+     App()

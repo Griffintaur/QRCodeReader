@@ -21,12 +21,13 @@ class AffineTransformation(object):
         Point2=[PointRight[0],PointRight[1]]
         Point3=[PointBottom[0],PointBottom[1]]
         src=np.float32([Point1,Point2,Point3])
-        dest_pointTop=[20,20]
-        dest_pointRight=[120,20]
-        dest_pointBottom=[20,120]
+        dest_pointTop=[40,40]
+        dest_pointRight=[140,40]
+        dest_pointBottom=[40,140]
         destination=np.float32([dest_pointTop,dest_pointRight,dest_pointBottom])
         affineTrans=cv.getAffineTransform(src,destination)
         self.TransformImage=cv.warpAffine(self.OriginalImage,affineTrans,self.OriginalImage.shape[:2])
-        cv.imshow("TransformImage",self.TransformImage)
-        cv.waitKey(0)
+        self.TransformImage=self.TransformImage[0:200,0:200]
+#        cv.imshow("TransformImage",self.TransformImage)
+#        cv.waitKey(0)
         return self.TransformImage

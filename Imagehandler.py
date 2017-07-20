@@ -6,7 +6,6 @@ Created on  Jun 16 14:28:26 2016
 """
 import cv2 as cv
 import os.path
-import numpy as np
 from PatternFinding import PatternFinding
 from FindingOrientationOfContours import FindingOrientationOfContours
 from AffineTransformation import AffineTransformation
@@ -30,14 +29,14 @@ class Imagehandler(object):
         self.Image=cv.adaptiveThreshold(self.Image,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,2)
         return self.Image
     
-    def WritingImage(self,image):
+    def WritingImage(self,image,path,imageName):
         if(image is None):
             print"Image is not valid.Please select some other image"
         else:
-            nameAppended=self.ImagePath.split("/")
             image=cv.cvtColor(image,cv.COLOR_BGR2RGB)
-            cv.imwrite(os.path.join(os.getcwd(),'Results')+'qrcode'+nameAppended[len(nameAppended)-1]+'.png',image)
-            cv.imshow('qrcode'+nameAppended[len(nameAppended)-1],image)
+            print path+imageName
+            cv.imwrite(path+imageName,image)
+            cv.imshow(imageName,image)
             cv.waitKey(0);
         
     def GetImageContour(self):
@@ -76,7 +75,8 @@ class Imagehandler(object):
         print Top[0]
         affineTransformObj=AffineTransformation(self.imageOriginal)
         self.TransformImage=affineTransformObj.Transform(Top,Right,Bottom)
-        self.WritingImage(self.TransformImage)
+        return self.TransformImage
+        
                 
         
 
