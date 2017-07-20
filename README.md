@@ -32,7 +32,7 @@ Please [open an issue on GitHub](https://github.com/Griffintaur/QRCodeReader/iss
 - **Input2**
   ![Input1](https://raw.githubusercontent.com/Griffintaur/QRCodeReader/master/Input/qr3.jpg)
 - **Output2**
-  ![Ouput1](https://raw.githubusercontent.com/Griffintaur/QRCodeReader/master/Results/output1.jpg)
+  ![Ouput1](https://raw.githubusercontent.com/Griffintaur/QRCodeReader/master/Results/output0.jpg)
 
 ## License
 The code is released under MIT license and free to use.
