@@ -65,6 +65,8 @@ class Imagehandler(object):
     def QRCodeInImage(self):
         patternFindingObj=PatternFinding(self.GetImageContour(),self.imageOriginal)
         patterns=patternFindingObj.FindingQRPatterns(3)
+        if len(patterns):
+            print "patterns unble to find"
         contourA=patterns[0]
         contourB=patterns[1]
         contourC=patterns[2]

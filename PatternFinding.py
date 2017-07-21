@@ -23,7 +23,7 @@ class PatternFinding(object):
         patterns=[]
         patterns_indices=[]
         for index in xrange(len(self.Contours)):
-            IsPattern=self.IsPossibleQRContour(index)
+            IsPattern=self.IsPossibleQRContour(index,nooflevels)
             if IsPattern is True:
                 patterns.append(self.Contours[index])
                 #print self.Contours[index]
@@ -36,7 +36,10 @@ class PatternFinding(object):
         """This function filters to have only three QR patterns"""
         patterns,patterns_dictionary=self.CheckContourWithinContourHavingLevel(nooflevels)
         QRPatterns=[]
-        if len(patterns)<=3:
+        while (len(patterns)<3):
+            nooflevels=nooflevels-1
+            patterns,patterns_dictionary=self.CheckContourWithinContourHavingLevel(nooflevels)     
+        if len(patterns)==3:
             print 'patterns are less than equal to three'
             for ind in xrange(len(patterns)):
                 x,y,w,h=cv.boundingRect(patterns[ind])
@@ -95,8 +98,8 @@ class PatternFinding(object):
         """This Functions checks whether contours are in the certain ratio or not.This is required for qr as the qr has the contours in the specific ratio"""
         firstchildindex=self.Hierarchy[0][index][2]
         secondchildindex=self.Hierarchy[0][firstchildindex][2]
-        areaoffirst=cv.contourArea(self.Contours[index])/cv.contourArea(self.Contours[firstchildindex])
-        areaofsecondchild=cv.contourArea(self.Contours[firstchildindex])/cv.contourArea(self.Contours[secondchildindex])
+        areaoffirst=cv.contourArea(self.Contours[index])/(cv.contourArea(self.Contours[firstchildindex])+1e-5)
+        areaofsecondchild=cv.contourArea(self.Contours[firstchildindex])/(cv.contourArea(self.Contours[secondchildindex])+1e-5)
 #        x,y,w,h=cv.boundingRect(self.Contours[firstchildindex])
 #        cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
 #        x,y,w,h=cv.boundingRect(self.Contours[index])
@@ -122,7 +125,7 @@ class PatternFinding(object):
             index=t
         return False
     
-    def IsPossibleQRContour(self,contourindex):
+    def IsPossibleQRContour(self,contourindex,nooflevels):
         """since contours belonging to QR have 6 other contours inside it.It is because every border is counted as contour in the Opencv"""
         tempContourChild=self.Hierarchy[0][contourindex][2]
         #print tempContourChild
@@ -130,7 +133,7 @@ class PatternFinding(object):
         while tempContourChild !=-1:
             level=level+1
             tempContourChild=self.Hierarchy[0][tempContourChild][2]
-        if(level>=6):
+        if(level>=nooflevels):
             print level
             IsAreaSame=self.CheckingRatioOfContours(contourindex)
             if IsAreaSame is True:
