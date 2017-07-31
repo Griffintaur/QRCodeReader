@@ -15,8 +15,8 @@ class Imagehandler(object):
         if (os.path.exists(path) and os.path.isfile(path)):
             self.ImagePath=path
         else:
-            print "file not found"
-    
+            raise OSError('Invalid path specified in `config.yml`.')
+
     def __convertImagetoBlackWhite(self):
         self.Image=cv.imread(self.ImagePath,cv.IMREAD_COLOR)
         self.imageOriginal=self.Image
@@ -24,11 +24,11 @@ class Imagehandler(object):
             print "some problem with the image"
         else:
             print "Image Loaded"
-            
+
         self.Image=cv.cvtColor(self.Image,cv.COLOR_BGR2GRAY)
         self.Image=cv.adaptiveThreshold(self.Image,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,2)
         return self.Image
-    
+
     def WritingImage(self,image,path,imageName):
         if(image is None):
             print"Image is not valid.Please select some other image"
@@ -38,7 +38,7 @@ class Imagehandler(object):
             cv.imwrite(path+imageName,image)
             cv.imshow(imageName,image)
             cv.waitKey(0);
-        
+
     def GetImageContour(self):
         thresholdImage= self.__convertImagetoBlackWhite()
         thresholdImage=cv.Canny(thresholdImage,100,200)
@@ -61,7 +61,7 @@ class Imagehandler(object):
 #        cv.waitKey(0)
         contour_group=(thresholdImage, contours, hierarchy)
         return contour_group
-    
+
     def QRCodeInImage(self):
         patternFindingObj=PatternFinding(self.GetImageContour(),self.imageOriginal)
         patterns=patternFindingObj.FindingQRPatterns(3)
@@ -78,10 +78,3 @@ class Imagehandler(object):
         affineTransformObj=AffineTransformation(self.imageOriginal)
         self.TransformImage=affineTransformObj.Transform(Top,Right,Bottom)
         return self.TransformImage
-        
-                
-        
-
-        
-        
-    
