@@ -6,136 +6,161 @@ Created on  Jul 16 21:56:30 2016
 """
 import cv2 as cv
 import numpy as np
+
+
 class PatternFinding(object):
-    
-    def __init__(self,contours_group,image):
-        self.image=image
+    def __init__(self, contours_group, image):
+        self.image = image
         if contours_group is None:
-            print "Please provide contours"
+            print 'Please provide contours'
         else:
-            thresholdImage, contours, hierarchy=contours_group
-            self.Contours=contours
-            self.ThresholdImage=thresholdImage
-            self.Hierarchy=hierarchy
-            
-    def CheckContourWithinContourHavingLevel(self,nooflevels):
-        """This function checks whether there is contour inside another contour till level as mentioned in the nooflevels"""
-        patterns=[]
-        patterns_indices=[]
+            thresholdImage, contours, hierarchy = contours_group
+            self.Contours = contours
+            self.ThresholdImage = thresholdImage
+            self.Hierarchy = hierarchy
+
+    def CheckContourWithinContourHavingLevel(self, nooflevels):
+        """This function checks whether there is contour inside another
+        contour till level as mentioned in the nooflevels"""
+        patterns = []
+        patterns_indices = []
         for index in xrange(len(self.Contours)):
-            IsPattern=self.IsPossibleQRContour(index,nooflevels)
+            IsPattern = self.IsPossibleQRContour(index, nooflevels)
             if IsPattern is True:
                 patterns.append(self.Contours[index])
-                #print self.Contours[index]
+                # print self.Contours[index]
                 patterns_indices.append(index)
-                #patterns_dictionary[hash(tuple(self.Contours[index]))]=index   
+                # patterns_dictionary[hash(tuple(self.Contours[index]))]=index
         cv.waitKey(0)
-        return patterns,patterns_indices
-            
-    def FindingQRPatterns(self,nooflevels):
+        return patterns, patterns_indices
+
+    def FindingQRPatterns(self, nooflevels):
         """This function filters to have only three QR patterns"""
-        patterns,patterns_dictionary=self.CheckContourWithinContourHavingLevel(nooflevels)
-        QRPatterns=[]
-        while (len(patterns)<3):
-            nooflevels=nooflevels-1
-            patterns,patterns_dictionary=self.CheckContourWithinContourHavingLevel(nooflevels)     
-        if len(patterns)==3:
+        patterns, patterns_dictionary = \
+            self.CheckContourWithinContourHavingLevel(nooflevels)
+
+        QRPatterns = []
+
+        while len(patterns) < 3:
+            nooflevels = nooflevels-1
+            patterns, patterns_dictionary = \
+                self.CheckContourWithinContourHavingLevel(nooflevels)
+
+        if len(patterns) == 3:
             print 'patterns are less than equal to three'
             for ind in xrange(len(patterns)):
-                x,y,w,h=cv.boundingRect(patterns[ind])
-                cv.rectangle(self.image,(x,y),(x+w,y+h),(0,255,0),2)
-                cv.imshow("hello",self.image)                     
+                x, y, w, h = cv.boundingRect(patterns[ind])
+                cv.rectangle(
+                    self.image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv.imshow('hello', self.image)
             return patterns
         else:
-           area_patterns=np.array([cv.contourArea(pattern) for pattern in patterns])
-           arg_areapatterns=np.argsort(area_patterns)
-           passage_dictinary={}
-           for i in xrange(len(patterns)):
-               index=patterns_dictionary[arg_areapatterns[len(arg_areapatterns)-i-1]]
-               if index is None:
-                   print 'contour not found in the dictionary'
-               else:
-                   #print'papa is', self.Hierarchy[0][index][3]
-                   if self.Hierarchy[0][index][3]==-1:
-                       passage_dictinary[index]=-1
-                   else:
-                       if self.IsparentAlreadyThere(passage_dictinary,index):
-                           passage_dictinary[index]=1
-                           #print 'got one',self.Hierarchy[0][index][3]
-                       else:
-                           passage_dictinary[index]=-1
-                                        
+            area_patterns = np.array(
+                [cv.contourArea(pattern) for pattern in patterns])
+            arg_areapatterns = np.argsort(area_patterns)
+            passage_dictinary = {}
+            for i in xrange(len(patterns)):
+                index = patterns_dictionary[arg_areapatterns[
+                    len(arg_areapatterns) - i - 1]]
+                if index is None:
+                    print 'contour not found in the dictionary'
+                else:
+                    # print 'papa is', self.Hierarchy[0][index][3]
+                    if self.Hierarchy[0][index][3] == -1:
+                        passage_dictinary[index] = -1
+                    else:
+                        if self.IsparentAlreadyThere(passage_dictinary, index):
+                            passage_dictinary[index] = 1
+                            # print 'got one',self.Hierarchy[0][index][3]
+                        else:
+                            passage_dictinary[index] = -1
+
         for ind in xrange(len(patterns)):
-                mapping=patterns_dictionary[ind]
-                if passage_dictinary[mapping]==-1:
-                    x,y,w,h=cv.boundingRect(self.Contours[mapping])
-                    cv.rectangle(self.image,(x,y),(x+w,y+h),(0,255,0),2)
-                    cv.imshow("hello",self.image) 
-                    QRPatterns.append(patterns[ind])
-        if len(QRPatterns)>3:
-           QRPatterns_new=[]
-           area_patterns=np.array([cv.contourArea(QRpattern) for QRpattern in QRPatterns])
-           arg_areapatterns=np.argsort(area_patterns)
-           for i in xrange(3):
-               QRPatterns_new.append(QRPatterns[arg_areapatterns[len(arg_areapatterns)-i-1]])
-               x,y,w,h=cv.boundingRect(QRPatterns_new[i])
-               cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
-               cv.imshow("hello",self.image) 
-           QRPatterns=QRPatterns_new
+            mapping = patterns_dictionary[ind]
+            if passage_dictinary[mapping] == -1:
+                x, y, w, h = cv.boundingRect(self.Contours[mapping])
+                cv.rectangle(
+                    self.image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv.imshow('hello', self.image)
+                QRPatterns.append(patterns[ind])
+        if len(QRPatterns) > 3:
+            QRPatterns_new = []
+            area_patterns = np.array([
+                cv.contourArea(QRpattern) for QRpattern in QRPatterns])
+            arg_areapatterns = np.argsort(area_patterns)
+            for i in xrange(3):
+                QRPatterns_new.append(QRPatterns[arg_areapatterns[
+                    len(arg_areapatterns) - i - 1]])
+                x, y, w, h = cv.boundingRect(QRPatterns_new[i])
+                cv.rectangle(
+                    self.image, (x, y), (x + w, y + h), (0, 0, 255), 2)
+                cv.imshow('hello', self.image)
+            QRPatterns = QRPatterns_new
         return QRPatterns
-               
-    
-    def IsparentAlreadyThere(self,passage_dictinary,index):
-        parent=self.Hierarchy[0][index][3]
-        while parent!=-1 and parent not in passage_dictinary.keys():
-            parent=self.Hierarchy[0][parent][3]
-        if parent==-1:
+
+    def IsparentAlreadyThere(self, passage_dictinary, index):
+        parent = self.Hierarchy[0][index][3]
+        while (parent != -1) and (parent not in passage_dictinary.keys()):
+            parent = self.Hierarchy[0][parent][3]
+
+        if parent == -1:
             return False
         else:
             return True
-            
-    def CheckingRatioOfContours(self,index):
-        """This Functions checks whether contours are in the certain ratio or not.This is required for qr as the qr has the contours in the specific ratio"""
-        firstchildindex=self.Hierarchy[0][index][2]
-        secondchildindex=self.Hierarchy[0][firstchildindex][2]
-        areaoffirst=cv.contourArea(self.Contours[index])/(cv.contourArea(self.Contours[firstchildindex])+1e-5)
-        areaofsecondchild=cv.contourArea(self.Contours[firstchildindex])/(cv.contourArea(self.Contours[secondchildindex])+1e-5)
-#        x,y,w,h=cv.boundingRect(self.Contours[firstchildindex])
-#        cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
-#        x,y,w,h=cv.boundingRect(self.Contours[index])
-#        cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
-#        x,y,w,h=cv.boundingRect(self.Contours[secondchildindex])
-#        cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
-#        print areaoffirst
-#        print areaofsecondchild
-#        print (areaoffirst/areaofsecondchild)
-        if (areaoffirst/areaofsecondchild)> 1 and (areaoffirst/areaofsecondchild)< 10:
+
+    def CheckingRatioOfContours(self, index):
+        """This Functions checks whether contours are in the certain ratio
+        or not.This is required for qr as the qr has the contours in the
+        specific ratio"""
+        firstchildindex = self.Hierarchy[0][index][2]
+        secondchildindex = self.Hierarchy[0][firstchildindex][2]
+        areaoffirst = cv.contourArea(self.Contours[index]) / (
+            cv.contourArea(self.Contours[firstchildindex]) + 1e-5)
+        areaofsecondchild = cv.contourArea(self.Contours[firstchildindex]) / (
+            cv.contourArea(self.Contours[secondchildindex]) + 1e-5)
+
+        # x,y,w,h=cv.boundingRect(self.Contours[firstchildindex])
+        # cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
+        # x,y,w,h=cv.boundingRect(self.Contours[index])
+        # cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
+        # x,y,w,h=cv.boundingRect(self.Contours[secondchildindex])
+        # cv.rectangle(self.image,(x,y),(x+w,y+h),(0,0,255),2)
+        # print areaoffirst
+        # print areaofsecondchild
+        # print (areaoffirst/areaofsecondchild)
+
+        if (areaoffirst / areaofsecondchild) > 1 and \
+           ((areaoffirst / areaofsecondchild) < 10):
             return True
         else:
-            return False    
+            return False
+
     def FindingPatterns(self):
         pass
-        
-    def __isContourBInsideContourA(self,contourindexa,contourindexb,heir):
-        index=contourindexa
-        while heir[0,index,3] != contourindexb:
-            t=heir[0,index,3]
-            if t==-1:
+
+    def __isContourBInsideContourA(self, contourindexa, contourindexb, heir):
+        index = contourindexa
+        while heir[0, index, 3] != contourindexb:
+            t = heir[0, index, 3]
+            if t == -1:
                 return False
-            index=t
+            index = t
         return False
-    
-    def IsPossibleQRContour(self,contourindex,nooflevels):
-        """since contours belonging to QR have 6 other contours inside it.It is because every border is counted as contour in the Opencv"""
-        tempContourChild=self.Hierarchy[0][contourindex][2]
-        #print tempContourChild
-        level=0
-        while tempContourChild !=-1:
-            level=level+1
-            tempContourChild=self.Hierarchy[0][tempContourChild][2]
-        if(level>=nooflevels):
+
+    def IsPossibleQRContour(self, contourindex, nooflevels):
+        """since contours belonging to QR have 6 other contours
+        inside it.It is because every border is counted as
+        contour in the Opencv"""
+        tempContourChild = self.Hierarchy[0][contourindex][2]
+        # print tempContourChild
+        level = 0
+        while tempContourChild != -1:
+            level = level+1
+            tempContourChild = self.Hierarchy[0][tempContourChild][2]
+
+        if (level >= nooflevels):
             print level
-            IsAreaSame=self.CheckingRatioOfContours(contourindex)
+            IsAreaSame = self.CheckingRatioOfContours(contourindex)
             if IsAreaSame is True:
                 return True
             else:
@@ -144,15 +169,20 @@ class PatternFinding(object):
         else:
             return False
 
-    def __compareContourArea(self,contourindexa,contourindexb,contours):
-        if(cv.contourArea(contours[contourindexa]) >cv.contourArea(contours[contourindexb])):
+    def __compareContourArea(self, contourindexa, contourindexb, contours):
+        if cv.contourArea(contours[contourindexa]) > \
+           cv.contourArea(contours[contourindexb]):
             return True
         else:
             return False
-    def LimitContourNumbers(self,minPix,maxPix,contours):
-        contours=[contours.remove(contour) for contour in contours if (cv.contourArea(contour)<minPix or cv.contourArea(contour)>maxPix)]
+
+    def LimitContourNumbers(self, minPix, maxPix, contours):
+        contours = [contours.remove(contour) for contour in contours if
+                    ((cv.contourArea(contour) < minPix) or
+                     (cv.contourArea(contour) > maxPix))]
+
         return contours
-        
+
     def reduceImageContour(self):
-        contours=self.GetImageContour()
-     
+        # contours = self.GetImageContour()
+        self.GetImageContour()
