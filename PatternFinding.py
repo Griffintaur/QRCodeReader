@@ -126,7 +126,7 @@ class PatternFinding(object):
         # print areaofsecondchild
         # print (areaoffirst/areaofsecondchild)
 
-        return not ((areaoffirst / areaofsecondchild) > 1 and \
+        return ((areaoffirst / areaofsecondchild) > 1 and \
            ((areaoffirst / areaofsecondchild) < 10))
 
 
@@ -156,7 +156,7 @@ class PatternFinding(object):
         if (level >= nooflevels):
             print level
             IsAreaSame = self.CheckingRatioOfContours(contourindex)
-            return not (IsAreaSame is True)
+            return (IsAreaSame is True)
         else:
             return False
 
