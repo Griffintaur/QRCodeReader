@@ -11,7 +11,7 @@ import numpy as np
 class PatternFinding(object):
     def __init__(self, contours_group, image):
         self.image = image
-        if contours_group is None:
+        if not contours_group:
             print 'Please provide contours'
         else:
             thresholdImage, contours, hierarchy = contours_group
@@ -62,7 +62,7 @@ class PatternFinding(object):
             for i in xrange(len(patterns)):
                 index = patterns_dictionary[arg_areapatterns[
                     len(arg_areapatterns) - i - 1]]
-                if index is None:
+                if not index:
                     print 'contour not found in the dictionary'
                 else:
                     # print 'papa is', self.Hierarchy[0][index][3]

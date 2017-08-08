@@ -22,7 +22,7 @@ class Imagehandler(object):
     def __convertImagetoBlackWhite(self):
         self.Image = cv.imread(self.ImagePath, cv.IMREAD_COLOR)
         self.imageOriginal = self.Image
-        if self.Image is None:
+        if not self.Image:
             print 'some problem with the image'
         else:
             print 'Image Loaded'
@@ -40,7 +40,7 @@ class Imagehandler(object):
         return self.Image
 
     def WritingImage(self, image, path, imageName):
-        if image is None:
+        if not image:
             print 'Image is not valid.Please select some other image'
         else:
             image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
