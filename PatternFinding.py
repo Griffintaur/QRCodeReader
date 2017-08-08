@@ -103,10 +103,7 @@ class PatternFinding(object):
         while (parent != -1) and (parent not in passage_dictinary.keys()):
             parent = self.Hierarchy[0][parent][3]
 
-        if parent == -1:
-            return False
-        else:
-            return True
+        return not (parent == -1)
 
     def CheckingRatioOfContours(self, index):
         """This Functions checks whether contours are in the certain ratio
@@ -129,11 +126,9 @@ class PatternFinding(object):
         # print areaofsecondchild
         # print (areaoffirst/areaofsecondchild)
 
-        if (areaoffirst / areaofsecondchild) > 1 and \
-           ((areaoffirst / areaofsecondchild) < 10):
-            return True
-        else:
-            return False
+        return not ((areaoffirst / areaofsecondchild) > 1 and \
+           ((areaoffirst / areaofsecondchild) < 10))
+
 
     def FindingPatterns(self):
         pass
@@ -161,11 +156,7 @@ class PatternFinding(object):
         if (level >= nooflevels):
             print level
             IsAreaSame = self.CheckingRatioOfContours(contourindex)
-            if IsAreaSame is True:
-                return True
-            else:
-                return False
-            return True
+            return not (IsAreaSame is True)
         else:
             return False
 
