@@ -101,7 +101,7 @@ class FindingOrientationOfContours(object):
             Bottom = SlopePointB
             Top = DistancePoint
 
-            return (Right, Bottom, Top)
+        return (Right, Bottom, Top)
 
     def CalculatePerpendicularDistance(
               self, DistancePoint, SlopePointA, SlopePointB):
