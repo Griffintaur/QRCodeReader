@@ -27,7 +27,7 @@ def App():
     for i in xrange(len(paths)):
         obj = Imagehandler(paths[i])
         TransformImage = obj.QRCodeInImage()
-        if not TransformImage:
+        if TransformImage is None:
             print 'Image is not generated'
         obj.WritingImage(
             TransformImage, str(output), 'output' + str(i) + '.jpg')

@@ -11,7 +11,7 @@ import numpy as np
 class AffineTransformation(object):
 
     def __init__(self, image):
-        if not image:
+        if image is None:
             print 'Unable to read the Image. Please provide the image file'
         else:
             self.OriginalImage = image
