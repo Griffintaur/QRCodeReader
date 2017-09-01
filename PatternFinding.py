@@ -31,14 +31,14 @@ class PatternFinding(object):
                 # print self.Contours[index]
                 patterns_indices.append(index)
                 # patterns_dictionary[hash(tuple(self.Contours[index]))]=index
-        cv.waitKey(0)
+        #cv.waitKey(0)
         return patterns, patterns_indices
 
     def FindingQRPatterns(self, nooflevels):
         """This function filters to have only three QR patterns"""
         patterns, patterns_dictionary = \
-            self.CheckContourWithinContourHavingLevel(nooflevels)
-
+            self.CheckContourWithinContourHavingLevel(nooflevels)  #returns contours and list of indices
+                                                                   #of the returned contours
         QRPatterns = []
 
         while len(patterns) < 3:
@@ -52,14 +52,16 @@ class PatternFinding(object):
                 x, y, w, h = cv.boundingRect(patterns[ind])
                 cv.rectangle(
                     self.image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                cv.imshow('hello', self.image)
+                #cv.imshow('qr box found', self.image)              #uncomment to debug
+                #cv.waitKey(0)
+            #cv.destroyAllWindows()
             return patterns
         else:
             area_patterns = np.array(
                 [cv.contourArea(pattern) for pattern in patterns])
             arg_areapatterns = np.argsort(area_patterns)
             passage_dictinary = {}
-            for i in xrange(len(patterns)):
+            for i in xrange(len(patterns)):                 #pick the largest area contour
                 index = patterns_dictionary[arg_areapatterns[
                     len(arg_areapatterns) - i - 1]]
                 if not index:
@@ -81,25 +83,29 @@ class PatternFinding(object):
                 x, y, w, h = cv.boundingRect(self.Contours[mapping])
                 cv.rectangle(
                     self.image, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                cv.imshow('hello', self.image)
+                #cv.imshow('contour of qr', self.image)         #uncomment to debug
+                #cv.waitKey(0)
                 QRPatterns.append(patterns[ind])
+            #cv.destroyAllWindows()
         if len(QRPatterns) > 3:
             QRPatterns_new = []
             area_patterns = np.array([
                 cv.contourArea(QRpattern) for QRpattern in QRPatterns])
             arg_areapatterns = np.argsort(area_patterns)
-            for i in xrange(3):
+            for i in xrange(3):                     #pick the best three
                 QRPatterns_new.append(QRPatterns[arg_areapatterns[
                     len(arg_areapatterns) - i - 1]])
                 x, y, w, h = cv.boundingRect(QRPatterns_new[i])
                 cv.rectangle(
                     self.image, (x, y), (x + w, y + h), (0, 0, 255), 2)
-                cv.imshow('hello', self.image)
+                #cv.imshow('best qr contour', self.image)           #uncomment to debug
+                #cv.waitKey(0)
+            #cv.destroyAllWindows()
             QRPatterns = QRPatterns_new
         return QRPatterns
 
-    def IsparentAlreadyThere(self, passage_dictinary, index):
-        parent = self.Hierarchy[0][index][3]
+    def IsparentAlreadyThere(self, passage_dictinary, index): #Checks if Parent exists which is present in
+        parent = self.Hierarchy[0][index][3]                  #passage_dictionary
         while (parent != -1) and (parent not in passage_dictinary.keys()):
             parent = self.Hierarchy[0][parent][3]
 
@@ -154,7 +160,7 @@ class PatternFinding(object):
             tempContourChild = self.Hierarchy[0][tempContourChild][2]
 
         if (level >= nooflevels):
-            print level
+            #print level
             IsAreaSame = self.CheckingRatioOfContours(contourindex)
             return (IsAreaSame is True)
         else:

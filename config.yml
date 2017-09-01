@@ -4,8 +4,8 @@
 
 #@author: Ankit Singh
 Main:
-    Input : 'C:\Users\310247467\Desktop\learn\qr\Input\'
-    Output: 'C:\Users\310247467\Desktop\learn\qr\Results\'
+    Input : '/home/ujjaldas223/projects/QRCodeReader/Input/'
+    Output: '/home/ujjaldas223/projects/QRCodeReader/Results/'
 FileType:
     - jpg
     - png

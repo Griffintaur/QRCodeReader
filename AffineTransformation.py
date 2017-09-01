@@ -31,6 +31,7 @@ class AffineTransformation(object):
         self.TransformImage = cv.warpAffine(
             self.OriginalImage, affineTrans, self.OriginalImage.shape[:2])
         self.TransformImage = self.TransformImage[0:200, 0:200]
-        # cv.imshow("TransformImage",self.TransformImage)
-        # cv.waitKey(0)
+        #cv.imshow("TransformImage",self.TransformImage)            #uncomment to debug
+        #cv.waitKey(0)
+        #cv.destroyAllWindows()
         return self.TransformImage
