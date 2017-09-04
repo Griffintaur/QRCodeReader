@@ -54,7 +54,7 @@ class PatternFinding(object):
                     self.image, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 #cv.imshow('qr box found', self.image)              #uncomment to debug
                 #cv.waitKey(0)
-            #cv.destroyAllWindows()
+                #cv.destroyAllWindows()
             return patterns
         else:
             area_patterns = np.array(
@@ -86,7 +86,7 @@ class PatternFinding(object):
                 #cv.imshow('contour of qr', self.image)         #uncomment to debug
                 #cv.waitKey(0)
                 QRPatterns.append(patterns[ind])
-            #cv.destroyAllWindows()
+                #cv.destroyAllWindows()
         if len(QRPatterns) > 3:
             QRPatterns_new = []
             area_patterns = np.array([
@@ -100,7 +100,7 @@ class PatternFinding(object):
                     self.image, (x, y), (x + w, y + h), (0, 0, 255), 2)
                 #cv.imshow('best qr contour', self.image)           #uncomment to debug
                 #cv.waitKey(0)
-            #cv.destroyAllWindows()
+                #cv.destroyAllWindows()
             QRPatterns = QRPatterns_new
         return QRPatterns
 
