@@ -7,7 +7,7 @@ Created on  Jun 16 14:28:26 2016
 from PatternFinding import PatternFinding
 from FindingOrientationOfContours import FindingOrientationOfContours
 from AffineTransformation import AffineTransformation
-import numpy as np
+#import numpy as np
 
 import cv2 as cv
 import os.path
