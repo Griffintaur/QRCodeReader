@@ -49,7 +49,7 @@ class Imagehandler(object):
             cv.imwrite(path + imageName, image)
             cv.imshow(imageName, image)
             cv.waitKey(0)
-        cv.destroyAllWindows()
+            cv.destroyAllWindows()
 
     def GetImageContour(self):
         thresholdImage = self.__convertImagetoBlackWhite()  #B & W with adaptive threshold
