@@ -5,7 +5,8 @@ QR code Detector was developed for fun and to learn opencv and image processing 
 # Requirements
 
 - **Python 2.7 +**
-- **OpenCV** 
+- **OpenCV 3.2.0 +**
+- **Flask 0.10.1 +**
 
 #### I recommend to install Python Anaconda so that all useful libraries are available at one go.
 # Working
@@ -17,6 +18,8 @@ QR code Detector was developed for fun and to learn opencv and image processing 
  Just run the call.py to get the output of the images placed in the Input Folder.
  If you want to change the Input folder, just write it in the config.yml file in the input section.
  You can change the location of the ouput folder by configuring it the ouput part.
+ Run simple_gui.py to read an image via a GUI having a QRCode or more, in the terminal and go to browser. In browser, type
+ the following URL "http://127.0.0.1:5000/", then upload the input image.
  
 # Contributing
 We welcome your contributions. Please feel free to fork the code, play with it, make some patches and send us pull requests .

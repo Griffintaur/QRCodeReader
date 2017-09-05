@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+			.imageContainer {
+			float: left;
+			}
+			p {
+			text-align: center;
+			}
+    </style>
+</head>
+<body>
+	<div>
+		<div class="imageContainer">
+			<img src = "{{url_for('static', filename=image_name)}}"/ height="400" width="400">
+			<h3>Input</h3>
+		</div>
+		<div class="imageContainer">
+			<img id="bg" src="{{ url_for('image_feed') }}"/ height="200" width="200">
+			<h3>Output</h3>
+		</div>
+	</div>
+</body>
+</html>
