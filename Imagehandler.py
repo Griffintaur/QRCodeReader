@@ -81,7 +81,7 @@ class Imagehandler(object):
             self.GetImageContour(), self.imageOriginal)
         patterns = patternFindingObj.FindingQRPatterns(3)
         if len(patterns) == 0:
-            print 'patterns unble to find'
+            print 'patterns unable to find'
         contourA = patterns[0]
         contourB = patterns[1]
         contourC = patterns[2]
