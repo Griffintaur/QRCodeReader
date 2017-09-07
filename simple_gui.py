@@ -1,4 +1,4 @@
-import os
+import os, threading, webbrowser
 from flask import Flask, request, render_template, Response
 from Imagehandler import Imagehandler
 
@@ -50,4 +50,6 @@ def upload():
     return render_template("complete.html", image_name=filename)
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    url = 'http://127.0.0.1:{0}'.format(5000)
+    threading.Timer(1.25, lambda : webbrowser.open(url)).start()
+    app.run(port=5000, debug=False)
