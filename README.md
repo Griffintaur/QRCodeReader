@@ -36,7 +36,7 @@ Please [open an issue on GitHub](https://github.com/Griffintaur/QRCodeReader/iss
 - **Output2**
   ![Ouput1](https://raw.githubusercontent.com/Griffintaur/QRCodeReader/master/Results/output0.jpg)
 # Results in Browser
-- **Input** ![Input3](https://raw.githubusercontent.com/ujjaldas1997/QRCodeReader/master/Results/Screenshot%20from%202017-09-07%2018-14-26.png)
-- **Output** ![Output3](https://github.com/ujjaldas1997/QRCodeReader/blob/master/Results/Screenshot%20from%202017-09-07%2018-14-44.png?raw=true)
+- **Input** ![Input3](https://raw.githubusercontent.com/ujjaldas1997/QRCodeReader/fixing/Results/Screenshot%20from%202017-09-07%2018-14-26.png)
+- **Output** ![Output3](https://github.com/ujjaldas1997/QRCodeReader/blob/fixing/Results/Screenshot%20from%202017-09-07%2018-14-44.png?raw=true)
 ## License
 The code is released under MIT license and free to use.
