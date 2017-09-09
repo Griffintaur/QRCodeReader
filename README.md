@@ -18,8 +18,7 @@ QR code Detector was developed for fun and to learn opencv and image processing 
  Just run the call.py to get the output of the images placed in the Input Folder.
  If you want to change the Input folder, just write it in the config.yml file in the input section.
  You can change the location of the ouput folder by configuring it the ouput part.
- Run simple_gui.py to read an image via a GUI having a QRCode or more, in the terminal and go to browser. In browser, type
- the following URL "http://127.0.0.1:5000/", then upload the input image.
+ Run `python simple_gui.py` to read an image via a GUI having a QRCode or more, in the terminal and you will be automatically redirected to browser. In browser, upload the input image.
  
 # Contributing
 We welcome your contributions. Please feel free to fork the code, play with it, make some patches and send us pull requests .
@@ -36,6 +35,10 @@ Please [open an issue on GitHub](https://github.com/Griffintaur/QRCodeReader/iss
   ![Input1](https://raw.githubusercontent.com/Griffintaur/QRCodeReader/master/Input/qr3.jpg)
 - **Output2**
   ![Ouput1](https://raw.githubusercontent.com/Griffintaur/QRCodeReader/master/Results/output0.jpg)
-
+# Results in Browser
+- **Input1** ![Input3](https://raw.githubusercontent.com/ujjaldas1997/QRCodeReader/fixing/Results/Screenshot%20from%202017-09-07%2018-14-26.png)
+- **Output1** ![Output3](https://github.com/ujjaldas1997/QRCodeReader/blob/fixing/Results/Screenshot%20from%202017-09-07%2018-14-44.png?raw=true)
+- **Output2** ![Output4 ](https://raw.githubusercontent.com/ujjaldas1997/QRCodeReader/fixing/Results/Screenshot%20from%202017-09-09%2010-24-35.png)
+- **Output3** ![Output5 ](https://raw.githubusercontent.com/ujjaldas1997/QRCodeReader/fixing/Results/Screenshot%20from%202017-09-09%2010-37-57.png)
 ## License
 The code is released under MIT license and free to use.
