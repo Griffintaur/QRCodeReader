@@ -24,9 +24,6 @@ QR code Detector was developed for fun and to learn opencv and image processing 
 We welcome your contributions. Please feel free to fork the code, play with it, make some patches and send us pull requests .
  [MAIL me](anky.nits.cse@gmail.com) for any discussion on the project or contribution
 
-# Support
-Please [open an issue on GitHub](https://github.com/Griffintaur/QRCodeReader/issues/new) if you'd like to report a bug or request a feature.  
-
 # ScreenShot
 - **Input1** ![Input1](https://raw.githubusercontent.com/Griffintaur/QRCodeReader/master/Input/qr4.jpg)
 - **Output1**
@@ -40,5 +37,11 @@ Please [open an issue on GitHub](https://github.com/Griffintaur/QRCodeReader/iss
 - **Output1** ![Output3](https://github.com/ujjaldas1997/QRCodeReader/blob/fixing/Results/Screenshot%20from%202017-09-07%2018-14-44.png?raw=true)
 - **Output2** ![Output4 ](https://raw.githubusercontent.com/ujjaldas1997/QRCodeReader/fixing/Results/Screenshot%20from%202017-09-09%2010-24-35.png)
 - **Output3** ![Output5 ](https://raw.githubusercontent.com/ujjaldas1997/QRCodeReader/fixing/Results/Screenshot%20from%202017-09-09%2010-37-57.png)
+
+# Support
+Please [open an issue on GitHub](https://github.com/Griffintaur/QRCodeReader/issues/new) if you'd like to report a bug or request a feature.  
+
+  [![Donate](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)](https://www.paypal.me/kitabkalam/25usd)
+
 ## License
 The code is released under MIT license and free to use.
