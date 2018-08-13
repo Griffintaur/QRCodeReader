@@ -4,8 +4,8 @@
 
 #@author: Ankit Singh
 Main:
-    Input : /Users/piyushsi/Desktop/osrc/QRCodeReader/Input
-    Output: /Users/piyushsi/Desktop/osrc/QRCodeReader/Results
+    Input :
+    Output: 
 FileType:
     - jpg
     - png
