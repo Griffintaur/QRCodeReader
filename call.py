@@ -18,19 +18,21 @@ def App():
     input = IOPlaces['Input']
     output = IOPlaces['Output']
     directorypath = input
-    os.chdir(input)
     filesTypes = cfg['FileType']
     images = []
     for filetype in filesTypes:
-        images.extend(glob.glob('*.' + filetype))
-    paths = [directorypath + image for image in images]
+        images.extend(glob.glob(directorypath + '/*.' + filetype))
+    paths = [os.path.join(directorypath, image) for image in images]
     for i in xrange(len(paths)):
         obj = Imagehandler(paths[i])
-        TransformImage = obj.QRCodeInImage()
+        try:
+            TransformImage = obj.QRCodeInImage()
+        except ZeroDivisionError:
+            print 'QR Code not found in image '+paths[i]
+            continue
         if TransformImage is None:
             print 'Image is not generated'
-        obj.WritingImage(
-            TransformImage, str(output), 'output' + str(i) + '.jpg')
+        obj.WritingImage(TransformImage, str(output), '/output' + str(i) + '.jpg')
 
 
 if __name__ == '__main__':
