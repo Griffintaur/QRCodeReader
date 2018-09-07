@@ -46,10 +46,11 @@ class Imagehandler(object):
         else:
             image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
             print path + imageName
+            #why would you want to imshow your images. Let them be there in Results folder
             cv.imwrite(path + imageName, image)
-            cv.imshow(imageName, image)
-            cv.waitKey(0)
-            cv.destroyAllWindows()
+            # cv.imshow(imageName, image)
+            # cv.waitKey(0)ž
+            # cv.destroyAllWindows()
 
     def GetImageContour(self):
         thresholdImage = self.__convertImagetoBlackWhite()  #B & W with adaptive threshold
