@@ -12,7 +12,7 @@ class PatternFinding(object):
     def __init__(self, contours_group, image):
         self.image = image
         if not contours_group:
-            print 'Please provide contours'
+            print ('Please provide contours')
         else:
             thresholdImage, contours, hierarchy = contours_group
             self.Contours = contours
@@ -24,7 +24,7 @@ class PatternFinding(object):
         contour till level as mentioned in the nooflevels"""
         patterns = []
         patterns_indices = []
-        for index in xrange(len(self.Contours)):
+        for index in range(len(self.Contours)):
             IsPattern = self.IsPossibleQRContour(index, nooflevels)
             if IsPattern is True:
                 patterns.append(self.Contours[index])
@@ -47,8 +47,8 @@ class PatternFinding(object):
                 self.CheckContourWithinContourHavingLevel(nooflevels)
 
         if len(patterns) == 3:
-            print 'patterns are less than equal to three'
-            for ind in xrange(len(patterns)):
+            print ('patterns are less than equal to three')
+            for ind in range(len(patterns)):
                 x, y, w, h = cv.boundingRect(patterns[ind])
                 cv.rectangle(
                     self.image, (x, y), (x + w, y + h), (0, 255, 0), 2)
@@ -61,11 +61,11 @@ class PatternFinding(object):
                 [cv.contourArea(pattern) for pattern in patterns])
             arg_areapatterns = np.argsort(area_patterns)
             passage_dictinary = {}
-            for i in xrange(len(patterns)):                 #pick the largest area contour
+            for i in range(len(patterns)):                 #pick the largest area contour
                 index = patterns_dictionary[arg_areapatterns[
                     len(arg_areapatterns) - i - 1]]
                 if not index:
-                    print 'contour not found in the dictionary'
+                    print ('contour not found in the dictionary')
                 else:
                     # print 'papa is', self.Hierarchy[0][index][3]
                     if self.Hierarchy[0][index][3] == -1:
@@ -77,7 +77,7 @@ class PatternFinding(object):
                         else:
                             passage_dictinary[index] = -1
 
-        for ind in xrange(len(patterns)):
+        for ind in range(len(patterns)):
             mapping = patterns_dictionary[ind]
             if passage_dictinary[mapping] == -1:
                 x, y, w, h = cv.boundingRect(self.Contours[mapping])
@@ -92,7 +92,7 @@ class PatternFinding(object):
             area_patterns = np.array([
                 cv.contourArea(QRpattern) for QRpattern in QRPatterns])
             arg_areapatterns = np.argsort(area_patterns)
-            for i in xrange(3):                     #pick the best three
+            for i in range(3):                     #pick the best three
                 QRPatterns_new.append(QRPatterns[arg_areapatterns[
                     len(arg_areapatterns) - i - 1]])
                 x, y, w, h = cv.boundingRect(QRPatterns_new[i])
