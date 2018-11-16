@@ -86,13 +86,17 @@ class Imagehandler(object):
         contourB = patterns[1]
         contourC = patterns[2]
         orientationObj = FindingOrientationOfContours()
-        massQuad = orientationObj.FindOrientation(contourA, contourB, contourC)
+        massQuad , ORIENTATION= orientationObj.FindOrientation(contourA, contourB, contourC)
         tl=massQuad.tl
         tr=massQuad.tr
         bl=massQuad.bl
-
-        affineTransformObj = AffineTransformation(self.imageOriginal)
-        self.TransformImage = affineTransformObj.transform(tl, tr, bl)
+        #You could choose the method you like
+        if(True):
+            affineTransformObj = AffineTransformation(self.imageOriginal)
+            self.TransformImage = affineTransformObj.transform(tl, tr, bl)
+        else:
+            pspTransforObj = PerspectiveTransformation(self.imageOriginal, ORIENTATION)
+            self.TransformImage = pspTransforObj.transform(massQuad)
         return self.TransformImage
 
     def transform(self):
@@ -110,7 +114,4 @@ class Imagehandler(object):
         self.TransformImage=pspTransforObj.transform(massQuad)
 
 if __name__ == '__main__':
-    hdl=Imagehandler ("C:/Python35/PYwork/opencv/image/Screenshot from .png")
-    new_image=hdl.transform()
-    cv.imshow("new_image",hdl.TransformImage)
-    cv.waitKey(0)
+    pass
