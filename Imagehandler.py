@@ -92,7 +92,7 @@ class Imagehandler(object):
         bl=massQuad.bl
         #You could choose the method you like
         if(True):
-            affineTransformObj = AffineTransformation(self.imageOriginal)
+            affineTransformObj = AffineTransformation(self.imageOriginal, ORIENTATION)
             self.TransformImage = affineTransformObj.transform(tl, tr, bl)
         else:
             pspTransforObj = PerspectiveTransformation(self.imageOriginal, ORIENTATION)
@@ -103,3 +103,7 @@ class Imagehandler(object):
 
 if __name__ == '__main__':
     pass
+    # hdl=Imagehandler("C:\Python35\PYwork\opencv\image\QR.png")
+    # hdl.QRCodeInImage()
+    # cv.imshow("test",hdl.TransformImage)
+    # cv.waitKey(0)
