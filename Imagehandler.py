@@ -99,19 +99,7 @@ class Imagehandler(object):
             self.TransformImage = pspTransforObj.transform(massQuad)
         return self.TransformImage
 
-    def transform(self):
-        patternFindingObj = PatternFinding(self.GetImageContour(), self.imageOriginal)
-        patterns = patternFindingObj.FindingQRPatterns(3)
-        if len(patterns) == 0:
-            print('patterns unable to find')
-        contourA = patterns[0]
-        contourB = patterns[1]
-        contourC = patterns[2]
-        orientationObj = FindingOrientationOfContours()
-        massQuad , ORIENTATION= orientationObj.FindOrientation(contourA, contourB, contourC)
-        # test=
-        pspTransforObj=PerspectiveTransformation(self.imageOriginal,ORIENTATION)
-        self.TransformImage=pspTransforObj.transform(massQuad)
+
 
 if __name__ == '__main__':
     pass
